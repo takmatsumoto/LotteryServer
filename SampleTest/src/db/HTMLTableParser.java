@@ -16,7 +16,7 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-//HTTP ¤U¸ü´ú¸Õµ{¦¡¥Î
+//HTTP ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½Õµ{ï¿½ï¿½ï¿½ï¿½
 import java.io.File;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -34,13 +34,18 @@ import Model.LNPower38;
 import db.LotteryDataDownloadPathCollector;
 
 public class HTMLTableParser implements Runnable {
-//	private String testUri = "http://www.nfd.com.tw/lottery/39-year/39-2014.htm";
-
 	public ArrayList<LN539> listOf539 = new ArrayList<LN539>();
 	public ArrayList<LNBigLottery> listOfBigLottery = new ArrayList<LNBigLottery>();
 	public ArrayList<LNPower38> listOfPower38 = new ArrayList<LNPower38>();
 	public ArrayList<LN40> listOfBigFu40 = new ArrayList<LN40>();
-	public String csvSavePath = "C:/Users/takmatsumoto/Dropbox/";
+	/**
+	 * path for window
+	 */
+//	public String csvSavePath = "C:/Users/takmatsumoto/Dropbox/";
+	/**
+	 * path for mac
+	 */
+	public String csvSavePath = "/Users/liuliwey/Documents/";
 	private static LotteryDataDownloadPathCollector urlPaths = null;
 
 	public static void main(String[] args) throws IOException {
