@@ -1,0 +1,8 @@
+/**
+ * 
+ */
+/**
+ * @author takmatsumoto
+ *
+ */
+package MySQLConnector;
