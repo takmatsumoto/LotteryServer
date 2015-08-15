@@ -39,6 +39,8 @@ public class LotteryResultParser {
 		} catch (Exception e) {
 			// TODO: handle exception
 		} 
+		
+		/// git ignore test
 	}
 	
 	private void FileSaveEncodeWithUTF8(String fullPath, String content) {
