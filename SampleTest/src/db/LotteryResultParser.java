@@ -31,7 +31,7 @@ public class LotteryResultParser {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			// http://www.taiwanlottery.com.tw/Result_all.aspx 台彩樂頭開獎結果網址
+			// http://www.taiwanlottery.com.tw/Result_all.aspx �敶拇������雯��
 			Document doc = Jsoup.connect("http://www.taiwanlottery.com.tw/Result_all.aspx").maxBodySize(20000000).get();
 			
 			Date date = new Date();
@@ -40,7 +40,7 @@ public class LotteryResultParser {
 			
 			System.out.println(System.getenv("LOTTERY_RESULTFILE_ROOT_PATH"));
 			FileOutputStream outputstream = new FileOutputStream(new File(System.getenv("LOTTERY_RESULTFILE_ROOT_PATH") + dateString +"_lotteryresult.txt")); 
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputstream);
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputstream,"UTF-8");
 			outputStreamWriter.write(doc.html());
 			outputStreamWriter.flush();
 			outputStreamWriter.close();
