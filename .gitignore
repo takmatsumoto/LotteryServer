@@ -1,0 +1,12 @@
+#整個matadata資料夾
+.metadata/
+.recommenders/
+
+# jar 檔案不上傳
+*.jar
+*.classpath
+*.class
+*.png
+*.xml
+*.log
+*.project

@@ -24,30 +24,46 @@ public class LotteryResultParser {
 	public LotteryResultParser() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	private void LoadLotteryResultPage() {
+		try {
+			// http://www.taiwanlottery.com.tw/Result_all.aspx �敶拇������雯��
+			Document doc = Jsoup.connect("http://www.taiwanlottery.com.tw/Result_all.aspx").maxBodySize(20000000).get();
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String dateString = sdf.format(date);
+			
+			String fullPath = System.getenv("LOTTERY_RESULTFILE_ROOT_PATH") + dateString +"_lotteryresult.txt";
+			FileSaveEncodeWithUTF8(fullPath, doc.html());
+			System.out.println("done");
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 
+	}
+	
+	private void FileSaveEncodeWithUTF8(String fullPath, String content) {
+		try {
+			File file = new File(fullPath);
+			if (!file.exists()) {
+				FileOutputStream outputstream = new FileOutputStream(file); 
+				OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputstream,"UTF-8");
+				outputStreamWriter.write(content);
+				outputStreamWriter.flush();
+				outputStreamWriter.close();
+			}
+		}
+		catch (Exception e) {
+			
+		}
+	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		LotteryResultParser parser = new LotteryResultParser();
 		// TODO Auto-generated method stub
-		try {
-			// http://www.taiwanlottery.com.tw/Result_all.aspx �敶拇������雯��
-			Document doc = Jsoup.connect("http://www.taiwanlottery.com.tw/Result_all.aspx").maxBodySize(20000000).get();
-			
-			Date date = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String dateString = sdf.format(date);
-			
-			System.out.println(System.getenv("LOTTERY_RESULTFILE_ROOT_PATH"));
-			FileOutputStream outputstream = new FileOutputStream(new File(System.getenv("LOTTERY_RESULTFILE_ROOT_PATH") + dateString +"_lotteryresult.txt")); 
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputstream,"UTF-8");
-			outputStreamWriter.write(doc.html());
-			outputStreamWriter.flush();
-			outputStreamWriter.close();
-			System.out.println("done");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		parser.LoadLotteryResultPage();
 	}
 
 }
