@@ -1,3 +1,4 @@
+package HTTPServer;
 /*
 
 Common Port Assignments and Corresponding RFC Numbers              
@@ -31,14 +32,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Example program from Chapter 1 Programming Spiders, Bots and Aggregators in
- * Java Copyright 2001 by Jeff Heaton
  * 
- * WebServer is a very simple web-server. Any request is responded with a very
- * simple web-page.
- * 
- * @author Jeff Heaton
+ * @author Liu Li Wei
  * @version 1.0
+ * 
+ * Lottery HTTP Server Function
+ * 1.查詢樂透號碼
+ * 		a.可查威力彩,大樂透,大福彩,539
+ * 		b.提供查詢期數 預設是20期,可自訂
+ * 
  */
 /*
  * Examining the Mini Web Server
@@ -171,7 +173,6 @@ public class SimpleHttpServer {
 	
 	protected void start() {
 		ServerSocket s;
-		//HttpServletRequest servletRequest;
 
 	    System.out.println("Webserver starting up on port 3456");
 	    System.out.println("(press ctrl-c to exit)");
@@ -205,9 +206,12 @@ public class SimpleHttpServer {
 	        while ((line = in.readLine()) != null) {
 	    		System.out.println(line);
 	    		String lineElements[] = line.split(" ");
-	    		if (lineElements.length>1) {
+	    		if (lineElements.length>2) {
 	    			if (lineElements[0].compareTo("GET")==0)  {
 	    				contentString = "<body>got command (GET)</body>";
+	    				System.out.println("抓到的指令" + lineElements[1]);
+	    				String commandParam = lineElements[1];
+	    				
 	    			}
 	    		}
 	    		
