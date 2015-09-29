@@ -45,7 +45,7 @@ public class HTMLTableParser implements Runnable {
 	/**
 	 * path for mac
 	 */
-	public String csvSavePath = "/Users/liuliwey/Documents/";
+	public String csvSavePath = System.getenv("LOTTERY_RESULTFILE_ROOT_PATH");
 	private static LotteryDataDownloadPathCollector urlPaths = null;
 
 	public static void main(String[] args) throws IOException {

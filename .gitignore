@@ -1,6 +1,7 @@
-#整個matadata資料夾
+﻿#整個matadata資料夾
 .metadata/
 .recommenders/
+.settings/
 
 # jar 檔案不上傳
 *.jar
