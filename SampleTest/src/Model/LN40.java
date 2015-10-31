@@ -92,7 +92,7 @@ public class LN40 extends LotteryNumber {
 	}
 	
 	public String description() {
-		return "期數 : " + lotteryIndex + " 總期數 : " + lotteryIndexAll + "號碼 : " + Num1 + " " + Num2 + " " + Num3 + " " + Num4 + " " + Num5 + " " + " " + Num6 +  " " + Num7 + "日期 : " + strYear + " " + strDate;
+		return "期數 : " + lotteryIndex + " 總期數 : " + lotteryIndexAll + " 號碼 : " + Num1 + " " + Num2 + " " + Num3 + " " + Num4 + " " + Num5 + " " + Num6 +  " " + Num7 + " 日期 : " + strYear + " " + strDate;
 	}
 
 	/**
