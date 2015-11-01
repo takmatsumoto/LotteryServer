@@ -58,7 +58,7 @@ public class LotteryDBCommandLine539 implements ILotteryDBCommandLine {
 	@Override
 	public String selectData(Map<String, String> paramsMap) {
 		// TODO Auto-generated method stub
-		String commandline ="select * from Lottery_539_5";
+		String commandline = "select * from " + DB_TABLENAME_LOTTERY_539;
 		return commandline;
 	}
 
