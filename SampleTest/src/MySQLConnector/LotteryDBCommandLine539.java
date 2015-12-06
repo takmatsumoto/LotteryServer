@@ -24,7 +24,7 @@ public class LotteryDBCommandLine539 implements ILotteryDBCommandLine {
 	 * @see MySQLConnector.ILotteryDataBaseOperation#createTable(java.lang.String)
 	 */
 	@Override
-	public String createTable(Map<String, String> paramsMap) {
+	public String createTable() {
 		// TODO Auto-generated method stub
 		String commandline = "CREATE TABLE " + DB_TABLENAME_LOTTERY_539 + " (" +			 	
 					"year VARCHAR(4) " +
@@ -45,7 +45,7 @@ public class LotteryDBCommandLine539 implements ILotteryDBCommandLine {
 	 * @see MySQLConnector.ILotteryDataBaseOperation#insertNumberData(java.util.Map)
 	 */
 	@Override
-	public String insertData(Map<String, String> paramsMap) {
+	public String insertData() {
 		// TODO Auto-generated method stub
 		String commandline = "insert into " + DB_TABLENAME_LOTTERY_539 + "(year,date,yearIndex,number1,number2,number3,number4,number5,totalIndex) " +
 			      "values(?,?,?,?,?,?,?,?,?)";
@@ -56,7 +56,7 @@ public class LotteryDBCommandLine539 implements ILotteryDBCommandLine {
 	 * @see MySQLConnector.ILotteryDataBaseOperation#selectDataInCSVFormat(java.util.Map)
 	 */
 	@Override
-	public String selectData(Map<String, String> paramsMap) {
+	public String selectData() {
 		// TODO Auto-generated method stub
 		String commandline = "select * from " + DB_TABLENAME_LOTTERY_539;
 		return commandline;

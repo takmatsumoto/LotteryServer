@@ -46,28 +46,28 @@ public class jdbcmysql {
 		  {
 		    try {
 		      Class.forName("com.mysql.jdbc.Driver");
-		      //µù¥Udriver
+		      //ï¿½ï¿½ï¿½Udriver
 		      dbConnection = DriverManager.getConnection(
 		      "jdbc:mysql://localhost/test?useUnicode=true&characterEncoding=Big5",
 		      "root","pm1101tak1226");
-		      //¨ú±oconnection
+		      //ï¿½ï¿½ï¿½oconnection
 		 
 		//jdbc:mysql://localhost/test?useUnicode=true&characterEncoding=Big5
-		//localhost¬O¥D¾÷¦W,test¬Odatabase¦W
-		//useUnicode=true&characterEncoding=Big5¨Ï¥Îªº½s½X
+		//localhostï¿½Oï¿½Dï¿½ï¿½ï¿½W,testï¿½Odatabaseï¿½W
+		//useUnicode=true&characterEncoding=Big5ï¿½Ï¥Îªï¿½ï¿½sï¿½X
 		      
 		    }
 		    catch(ClassNotFoundException e)
 		    {
 		      System.out.println("DriverClassNotFound :"+e.toString());
-		    }//¦³¥i¯à·|²£¥Ísqlexception
+		    }//ï¿½ï¿½ï¿½iï¿½ï¿½|ï¿½ï¿½ï¿½ï¿½sqlexception
 		    catch(SQLException x) {
 		      System.out.println("Exception :"+x.toString());
 		    }
 		    
 		  }
-		  //«Ø¥ßtableªº¤è¦¡
-		  //¥i¥H¬Ý¬ÝStatementªº¨Ï¥Î¤è¦¡
+		  //ï¿½Ø¥ï¿½tableï¿½ï¿½ï¿½è¦¡
+		  //ï¿½iï¿½Hï¿½Ý¬ï¿½Statementï¿½ï¿½ï¿½Ï¥Î¤è¦¡
 		  public void createTable()
 		  {
 		    try
@@ -85,8 +85,8 @@ public class jdbcmysql {
 		      Close();
 		    }
 		  }
-		  //·s¼W¸ê®Æ
-		  //¥i¥H¬Ý¬ÝPrepareStatementªº¨Ï¥Î¤è¦¡
+		  //ï¿½sï¿½Wï¿½ï¿½ï¿½
+		  //ï¿½iï¿½Hï¿½Ý¬ï¿½PrepareStatementï¿½ï¿½ï¿½Ï¥Î¤è¦¡
 		  public void insertTable( String year,String date, int yearIndex, String number1,String number2, String number3, String number4, String number5, int totalIndex)
 		  {
 		    try
@@ -113,8 +113,8 @@ public class jdbcmysql {
 		      Close();
 		    }
 		  }
-		  //§R°£Table,
-		  //¸ò«Ø¥ßtable«Ü¹³
+		  //ï¿½Rï¿½ï¿½Table,
+		  //ï¿½ï¿½Ø¥ï¿½tableï¿½Ü¹ï¿½
 		  public void dropTable()
 		  {
 		    try
@@ -131,8 +131,8 @@ public class jdbcmysql {
 		      Close();
 		    }
 		  }
-		  //¬d¸ß¸ê®Æ
-		  //¥i¥H¬Ý¬Ý¦^¶Çµ²ªG¶°¤Î¨ú±o¸ê®Æ¤è¦¡
+		  //ï¿½dï¿½ß¸ï¿½ï¿½
+		  //ï¿½iï¿½Hï¿½Ý¬Ý¦^ï¿½Çµï¿½ï¿½Gï¿½ï¿½ï¿½Î¨ï¿½ï¿½oï¿½ï¿½Æ¤è¦¡
 		  public void SelectTable()
 		  {
 		    try
@@ -141,14 +141,14 @@ public class jdbcmysql {
 		      resultSet = statement.executeQuery(selectSQL);
 		      System.out.println("ID\t\tName\t\tPASSWORD");
 		      while(resultSet.next())
-		      {
-		        System.out.println("¦~¤À : "+resultSet.getString("year")+"\t\t¤é´Á : "+
-		        		resultSet.getString("date")+"\t\t·í¦~´Á¼Æ : "+resultSet.getInt("yearIndex")+"\t\t¸¹½X : "+
+		      {		
+		        System.out.println("ï¿½~ï¿½ï¿½ : "+resultSet.getString("year")+"\t\tï¿½ï¿½ï¿½ : "+
+		        		resultSet.getString("date")+"\t\tï¿½ï¿½~ï¿½ï¿½ï¿½ï¿½ : "+resultSet.getInt("yearIndex")+"\t\tï¿½ï¿½ï¿½X : "+
 		        		resultSet.getString("number1")+" "+
 		        		resultSet.getString("number2")+" "+
 		        		resultSet.getString("number3")+" "+
 		        		resultSet.getString("number4")+" "+
-		        		resultSet.getString("number5")+"\t\t Á`´Á¼Æ :"+resultSet.getInt("totalIndex"));
+		        		resultSet.getString("number5")+"\t\t ï¿½`ï¿½ï¿½ï¿½ï¿½ :"+resultSet.getInt("totalIndex"));
 		      }
 		    }
 		    catch(SQLException e)
@@ -160,8 +160,8 @@ public class jdbcmysql {
 		      Close();
 		    }
 		  }
-		  //§¹¾ã¨Ï¥Î§¹¸ê®Æ®w«á,°O±o­nÃö³¬©Ò¦³Object
-		  //§_«h¦bµ¥«ÝTimeout®É,¥i¯à·|¦³Connection poorªºª¬ªp
+		  //ï¿½ï¿½ï¿½ï¿½Ï¥Î§ï¿½ï¿½ï¿½Æ®wï¿½ï¿½,ï¿½Oï¿½oï¿½nï¿½ï¿½ï¿½ï¿½ï¿½Ò¦ï¿½Object
+		  //ï¿½_ï¿½hï¿½bï¿½ï¿½ï¿½ï¿½Timeoutï¿½ï¿½,ï¿½iï¿½ï¿½|ï¿½ï¿½Connection poorï¿½ï¿½ï¿½ï¿½ï¿½p
 		  private void Close()
 		  {
 		    try
@@ -209,7 +209,7 @@ public class jdbcmysql {
 //				  "http://www.nfd.com.tw/lottery/39-year/39-2013.htm",
 //				  "http://www.nfd.com.tw/lottery/39-year/39-2014.htm",
 //				  "http://www.nfd.com.tw/lottery/39-year/39-2015.htm"};
-			  //´ú¬Ý¬Ý¬O§_¥¿±`
+			  //ï¿½ï¿½ï¿½Ý¬Ý¬Oï¿½_ï¿½ï¿½ï¿½`
 			  jdbcmysql test = new jdbcmysql();
 //			  test.dropTable();
 //			  test.createTable();
@@ -229,7 +229,7 @@ public class jdbcmysql {
 //		    for (LN539 ln539 : listOf539) {
 //				test.insertTable(ln539.strYear, ln539.strDate, ln539.lotteryIndex, ln539.Num1, ln539.Num2, ln539.Num3, ln539.Num4, ln539.Num5, ln539.lotteryIndexAll);
 //			}
-//		    System.out.println("§¹¦¨");
+//		    System.out.println("ï¿½ï¿½ï¿½ï¿½");
 		    
 		  }
 }

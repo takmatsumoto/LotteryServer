@@ -10,7 +10,7 @@ public class LotteryDBCommandLineBigFu implements ILotteryDBCommandLine {
 	}
 
 	@Override
-	public String createTable(Map<String, String> paramsMap) {
+	public String createTable() {
 		// TODO Auto-generated method stub
 		String commandline = 	"CREATE TABLE " + DB_TABLENAME_LOTTERY_BIGFU + " (" +			 	
 				"year VARCHAR(4) " +
@@ -30,7 +30,7 @@ public class LotteryDBCommandLineBigFu implements ILotteryDBCommandLine {
 	}
 
 	@Override
-	public String insertData(Map<String, String> paramsMap) {
+	public String insertData() {
 		// TODO Auto-generated method stub
 		String commandline = "insert into " + DB_TABLENAME_LOTTERY_BIGFU + "(year,date,yearIndex,number1,number2,number3,number4,number5,number6,number7,totalIndex) " +
 			      "values(?,?,?,?,?,?,?,?,?)";
@@ -38,7 +38,7 @@ public class LotteryDBCommandLineBigFu implements ILotteryDBCommandLine {
 	}
 
 	@Override
-	public String selectData(Map<String, String> paramsMap) {
+	public String selectData() {
 		// TODO Auto-generated method stub
 		String commandline = "select * from " + DB_TABLENAME_LOTTERY_BIGFU;
 		return commandline;
