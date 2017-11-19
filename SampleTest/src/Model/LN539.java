@@ -19,48 +19,62 @@ public class LN539 extends LotteryNumber {
 		for (Element td : elements) {
 //			print(td.text());
 			String str = td.text();			
-			switch (i) {
-			case 0:
-				this.strYear = str;
-				break;
-			case 1:
-				this.strDate = str.replace(" ", "");
-				break;
-			case 2:
-				try {
-					this.lotteryIndex = Integer.parseInt(str);
-				} catch (Exception e) {
-					// TODO: handle exception
-					System.out.println(e.getMessage());
-				}
-				
-				break;
-			case 3:
-				this.Num1 = str.replace(" ", "").replaceAll("\\xA1@", "");
-				break;
-			case 4:
-				this.Num2 = str;
-				break;
-			case 5:
-				this.Num3 = str;
-				break;
-			case 6:
-				this.Num4 = str;
-				break;
-			case 7:
-				this.Num5 = str;
-				break;
-			case 8:
-				try {
-					this.lotteryIndexAll = Integer.parseInt(str);
-				} catch (Exception e) {
-					// TODO: handle exception
-					System.out.println(e.getMessage());
-				}
-				break;
-			}
+			AssignElementToVar(str, i);
 			i++;
 			
+		}
+	}
+	
+	public LN539(String[] csvElements) {
+		int i = 0;
+		for (String csvElement : csvElements) {
+			String str =csvElement;			
+			AssignElementToVar(str, i);
+			i++;
+			
+		}
+	}
+	
+	private void AssignElementToVar(String str, int elementIndex) {
+		switch (elementIndex) {
+		case 0:
+			this.strYear = str;
+			break;
+		case 1:
+			this.strDate = str.replace(" ", "");
+			break;
+		case 2:
+			try {
+				this.lotteryIndex = Integer.parseInt(str);
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e.getMessage());
+			}
+			
+			break;
+		case 3:
+			this.Num1 = str.replace(" ", "").replaceAll("\\xA1@", "");
+			break;
+		case 4:
+			this.Num2 = str;
+			break;
+		case 5:
+			this.Num3 = str;
+			break;
+		case 6:
+			this.Num4 = str;
+			break;
+		case 7:
+			this.Num5 = str;
+			break;
+		case 8:
+			try {
+				this.lotteryIndexAll = Integer.parseInt(str);
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e.getMessage());
+			}
+			break;
 		}
 	}
 	
@@ -70,6 +84,6 @@ public class LN539 extends LotteryNumber {
 	}
 	
 	public String description() {
-		return "´Á¼Æ : " + lotteryIndex + " Á`´Á¼Æ : " + lotteryIndexAll + "¸¹½X : " + Num1 + " " + Num2 + " " + Num3 + " " + Num4 + " " + Num5 + " " + "¤é´Á : " + strYear + " " + strDate;
+		return "ï¿½ï¿½ï¿½ï¿½ : " + lotteryIndex + " ï¿½`ï¿½ï¿½ï¿½ï¿½ : " + lotteryIndexAll + "ï¿½ï¿½ï¿½X : " + Num1 + " " + Num2 + " " + Num3 + " " + Num4 + " " + Num5 + " " + "ï¿½ï¿½ï¿½ : " + strYear + " " + strDate;
 	}
 }

@@ -32,42 +32,55 @@ public class LNPower38 extends LotteryNumber {
 		for (Element td : elements) {
 //			print(td.text());
 			String str = td.text();
-			switch (i) {
-			case 0:
-				this.strYear = str;
-				break;
-			case 1:
-				this.strDate = str.replace(" ", "");
-				break;
-			case 2:
-				this.lotteryIndex = Integer.parseInt(str);
-				break;
-			case 3:
-				this.Section1Num1 = str;
-				break;
-			case 4:
-				this.Section1Num2 = str;
-				break;
-			case 5:
-				this.Section1Num3 = str;
-				break;
-			case 6:
-				this.Section1Num4 = str;
-				break;
-			case 7:
-				this.Section1Num5 = str;
-				break;
-			case 8:
-				this.Section1Num6 = str;
-				break;
-			case 9:
-				this.Section2Num = str; // specific number
-				break;
-			case 10:
-				this.lotteryIndexAll = Integer.parseInt(str);
-				break;
-			}
+			AssignElementToVar(str, i);
 			i++;	
+		}
+	}
+	
+	public LNPower38(String[] elements) {
+		int i = 0;
+		for (String element : elements) {
+			String str = element;
+			AssignElementToVar(str, i);
+			i++;	
+		}
+	}
+	
+	private void AssignElementToVar(String str, int elementIndex) {
+		switch (elementIndex) {
+		case 0:
+			this.strYear = str;
+			break;
+		case 1:
+			this.strDate = str.replace(" ", "");
+			break;
+		case 2:
+			this.lotteryIndex = Integer.parseInt(str);
+			break;
+		case 3:
+			this.Section1Num1 = str;
+			break;
+		case 4:
+			this.Section1Num2 = str;
+			break;
+		case 5:
+			this.Section1Num3 = str;
+			break;
+		case 6:
+			this.Section1Num4 = str;
+			break;
+		case 7:
+			this.Section1Num5 = str;
+			break;
+		case 8:
+			this.Section1Num6 = str;
+			break;
+		case 9:
+			this.Section2Num = str; // specific number
+			break;
+		case 10:
+			this.lotteryIndexAll = Integer.parseInt(str);
+			break;
 		}
 	}
 	
@@ -77,7 +90,7 @@ public class LNPower38 extends LotteryNumber {
 	}
 	
 	public String description() {
-		return "´Á¼Æ : " + lotteryIndex + " Á`´Á¼Æ : " + lotteryIndexAll + "¸¹½X : " + Section1Num1 + " " + Section1Num2 + " " + Section1Num3 + " " + Section1Num4 + " " + Section1Num5 + " " + Section1Num6 + " " + Section2Num + " " + "¤é´Á : " + strYear + " " + strDate;
+		return "ï¿½ï¿½ï¿½ï¿½ : " + lotteryIndex + " ï¿½`ï¿½ï¿½ï¿½ï¿½ : " + lotteryIndexAll + "ï¿½ï¿½ï¿½X : " + Section1Num1 + " " + Section1Num2 + " " + Section1Num3 + " " + Section1Num4 + " " + Section1Num5 + " " + Section1Num6 + " " + Section2Num + " " + "ï¿½ï¿½ï¿½ : " + strYear + " " + strDate;
 	}
 
 }

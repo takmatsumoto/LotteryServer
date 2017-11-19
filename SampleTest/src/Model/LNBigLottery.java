@@ -32,43 +32,59 @@ public class LNBigLottery extends LotteryNumber {
 		for (Element td : elements) {
 //			print(td.text());
 			String str = td.text();
-			switch (i) {
-			case 0:
-				this.strYear = str;	
-				break;
-			case 1:
-				this.strDate = str.replace(" ", "");
-				break;
-			case 2:
-				this.lotteryIndex = Integer.parseInt(str);
-				break;
-			case 3:
-				this.Num1 = str;
-				break;
-			case 4:
-				this.Num2 = str;
-				break;
-			case 5:
-				this.Num3 = str;
-				break;
-			case 6:
-				this.Num4 = str;
-				break;
-			case 7:
-				this.Num5 = str;
-				break;
-			case 8:
-				this.Num6 = str;
-				break;
-			case 9:
-				this.Num7 = str; // specific number
-				break;
-			case 10:
-				this.lotteryIndexAll = Integer.parseInt(str);
-				break;
-			}
+			AssignElementToVar(str, i);
 			i++;
 			
+		}
+	}
+	
+	public LNBigLottery(String[] elements) {
+		// TODO Auto-generated constructor stub
+		int i = 0;
+		for (String element : elements) {
+//			print(td.text());
+			String str = element;
+			AssignElementToVar(str, i);
+			i++;
+			
+		}
+	}
+	
+	private void AssignElementToVar(String str, int elementIndex) {
+		switch (elementIndex) {
+		case 0:
+			this.strYear = str;	
+			break;
+		case 1:
+			this.strDate = str.replace(" ", "");
+			break;
+		case 2:
+			this.lotteryIndex = Integer.parseInt(str);
+			break;
+		case 3:
+			this.Num1 = str;
+			break;
+		case 4:
+			this.Num2 = str;
+			break;
+		case 5:
+			this.Num3 = str;
+			break;
+		case 6:
+			this.Num4 = str;
+			break;
+		case 7:
+			this.Num5 = str;
+			break;
+		case 8:
+			this.Num6 = str;
+			break;
+		case 9:
+			this.Num7 = str; // specific number
+			break;
+		case 10:
+			this.lotteryIndexAll = Integer.parseInt(str);
+			break;
 		}
 	}
 	
@@ -78,7 +94,7 @@ public class LNBigLottery extends LotteryNumber {
 	}
 	
 	public String description() {
-		return "´Á¼Æ : " + lotteryIndex + " Á`´Á¼Æ : " + lotteryIndexAll + "¸¹½X : " + Num1 + " " + Num2 + " " + Num3 + " " + Num4 + " " + Num5 + " " + Num6 + " " + Num7 + " " + "¤é´Á : " + strYear + " " + strDate;
+		return "ï¿½ï¿½ï¿½ï¿½ : " + lotteryIndex + " ï¿½`ï¿½ï¿½ï¿½ï¿½ : " + lotteryIndexAll + "ï¿½ï¿½ï¿½X : " + Num1 + " " + Num2 + " " + Num3 + " " + Num4 + " " + Num5 + " " + Num6 + " " + Num7 + " " + "ï¿½ï¿½ï¿½ : " + strYear + " " + strDate;
 	}
 
 }
