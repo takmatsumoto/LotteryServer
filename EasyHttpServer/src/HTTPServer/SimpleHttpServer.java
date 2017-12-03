@@ -31,6 +31,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
 /**
  * 
  * @author Liu Li Wei
@@ -154,6 +155,31 @@ import java.net.Socket;
  * important for a program that opens up many connections, including one to a
  * spider.
  */
+
+import java.util.ArrayList;
+import java.io.FileReader;
+//import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+
+import HTMLPathCollector.AbstractLotteryDataDownloadPathCollector.LotteryType;
+import Model.LotteryNumber;
+import Model.LN40;
+import Model.LN539;
+import Model.LNBigLottery;
+import Model.LNPower38;
+import db.LotteryDataDownloadPathCollector;
+
+import java.util.ArrayList;
+
+import javax.naming.spi.DirStateFactory.Result;
+
+/**
+ * command model
+ *
+ */
+import HTTPServer.RequestParameterParser;
+
 /**
  * @author takmatsumoto
  *
@@ -167,17 +193,30 @@ public class SimpleHttpServer {
 //		
 //	}
 	
+	public ArrayList<LN539> listOf539 = new ArrayList<LN539>();
+	public ArrayList<LNBigLottery> listOfBigLottery = new ArrayList<LNBigLottery>();
+	public ArrayList<LNPower38> listOfPower38 = new ArrayList<LNPower38>();
+	public ArrayList<LN40> listOfBigFu40 = new ArrayList<LN40>();
+	private static LotteryDataDownloadPathCollector urlPaths = null;
+	
+	// commands
+	private final String Lottery = "type";
+	private final String LotteryDateRange = "date_range";
+	private final String LotteryLength = "total_length";
+	
+	
 	public SimpleHttpServer () {
 		
 	}
 	
 	protected void start() {
+		initConfigtion();
+		
 		ServerSocket s;
-
 	    System.out.println("Webserver starting up on port 3456");
 	    System.out.println("(press ctrl-c to exit)");
 	    try {
-	      // create the main server socket
+	      // create the main server socket\	\
 	      s = new ServerSocket(3456);
 	    } catch (Exception e) {
 	      System.out.println("Error: " + e);
@@ -204,14 +243,25 @@ public class SimpleHttpServer {
 	        String line = ".";
 	        String contentString = "";
 	        while ((line = in.readLine()) != null) {
-	    		System.out.println(line);
+	    		//System.out.println(line);
 	    		String lineElements[] = line.split(" ");
 	    		if (lineElements.length>2) {
 	    			if (lineElements[0].compareTo("GET")==0)  {
-	    				contentString = "<body>got command (GET)</body>";
-	    				System.out.println("抓到的指令" + lineElements[1]);
-	    				String commandParam = lineElements[1];
-	    				
+	    				if (lineElements[1].contains("command:")) {
+	    					String[] roots = lineElements[1].substring(1).split(":");
+	    					if (roots.length == 2) {
+	    						String commandParam = roots[1];
+	    						if (commandParam.length() > 0) {
+	    			    			RequestParameterParser parser = new RequestParameterParser(commandParam);
+	    			    			//System.out.println("抓到的指令 : \n" + parser.Description());
+	    			    			String lotteryType = parser.commands.get(this.Lottery);
+	    			    			String strLength = parser.commands.get(this.LotteryLength);
+	    			    			contentString += requestResponse(lotteryType, Integer.parseInt(strLength));	
+	    			    			
+	    			    		}	    				
+	    					}
+		    				
+	    				}
 	    			}
 	    		}
 	    		
@@ -220,6 +270,7 @@ public class SimpleHttpServer {
 	    		}
 	    		
 	    	}
+	       
 
 	        // Send the response
 	        // Send the headers
@@ -229,7 +280,6 @@ public class SimpleHttpServer {
 	        // this blank line signals the end of the headers
 	        out.println("");
 	        // Send the HTML page
-	        out.println("<H1>Welcome to the Ultra Mini-WebServer</H2>");
 	        out.println(contentString);
 	        out.flush();
 	        remote.close();
@@ -238,6 +288,93 @@ public class SimpleHttpServer {
 	      }
 	    }
 	}
+	
+	void initConfigtion() {
+		loadLotteryNumberData(LotteryType.LotteryType_539);
+    	loadLotteryNumberData(LotteryType.LotteryType_BigLottery);
+    	loadLotteryNumberData(LotteryType.LotteryType_Power38);
+    	loadLotteryNumberData(LotteryType.LotteryType_40);		
+	}
+	
+	void loadLotteryNumberData(LotteryType type) {
+		BufferedReader br = null;
+        String line = "";
+        urlPaths = new LotteryDataDownloadPathCollector();
+        try {
+        	int nowYear = urlPaths.currentYear(type);
+        	for (int year=urlPaths.baseYearWithType(type);year<=nowYear;year++) {
+        		String relativePath = urlPaths.getLastComponentOfDownloadPath(type, year);
+   			 	String csvSavePath = System.getenv("LOTTERY_PATH");
+   			 	String fileName = relativePath+".csv";
+   			 	String fullPath = csvSavePath + fileName;
+   			 	br = new BufferedReader(new FileReader(fullPath));
+   			 	while ((line = br.readLine()) != null) {
+   			 		// use comma as separator
+   			 		addLotteryData(line, type);
+   			 	}
+   			 	br.close();
+        	}
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	void addLotteryData(String line, LotteryType type) {
+		String cvsSplitBy = ",";
+		String[] elements = line.split(cvsSplitBy);
+		if (type == LotteryType.LotteryType_539) {
+		 	LN539 lotteryNumber = new LN539(elements);
+		 	listOf539.add(lotteryNumber);
+		}
+		else if (type == LotteryType.LotteryType_BigLottery) {
+			LNBigLottery lotteryNumber = new LNBigLottery(elements);
+		 	listOfBigLottery.add(lotteryNumber);
+		}
+		else if (type == LotteryType.LotteryType_Power38) {
+			LNPower38 lotteryNumber = new LNPower38(elements);
+		 	listOfPower38.add(lotteryNumber);
+		}
+		else if (type == LotteryType.LotteryType_40) {
+			LN40 lotteryNumber = new LN40(elements);
+		 	listOfBigFu40.add(lotteryNumber);
+		}		
+		else {
+			
+		}
+	}
+	
+	String requestResponse(String type, int length) {
+		String result = "";
+		if (type.compareToIgnoreCase("539") == 0) {
+			for (int i = listOf539.size()-1; i > listOf539.size() - length  ; i--) {
+				LN539 lotteryNumber = listOf539.get(i);
+				result += lotteryNumber.CSVLine();
+			}
+		}
+		else if (type.compareToIgnoreCase("BigLottery") == 0) {
+			for (int i = listOfBigLottery.size()-1; i > listOfBigLottery.size() - length  ; i--) {
+				LNBigLottery lotteryNumber = listOfBigLottery.get(i);
+				result += lotteryNumber.CSVLine();
+			}
+		}
+		else if (type.compareToIgnoreCase("Power38") == 0) {
+			for (int i = listOfPower38.size()-1; i > listOfPower38.size() - length  ; i--) {
+				LNPower38 lotteryNumber = listOfPower38.get(i);
+				result += lotteryNumber.CSVLine();
+			}
+		}
+		else if (type.compareToIgnoreCase("BigFu") == 0) {
+			for (int i = listOfBigFu40.size()-1; i > listOfBigFu40.size() - length  ; i--) {
+				LN40 lotteryNumber = listOfBigFu40.get(i);
+				result += lotteryNumber.CSVLine();
+			}
+		}
+		
+		return result;
+	}
+	
 
 	/**
 	 * @param args

@@ -26,7 +26,7 @@ public class LotteryDataDownloadPathCollector {
 	private LotteryDataDownloadPathCollectorBigLottery pathCollectorBigLottery = new LotteryDataDownloadPathCollectorBigLottery();
 	private LotteryDataDownloadPathCollectorPower38 pathCollectorPower38 = new LotteryDataDownloadPathCollectorPower38();
 	
-	LotteryDataDownloadPathCollector () {
+	public LotteryDataDownloadPathCollector () {
 		/*
 		Map<Integer, String> htmlDownloadPaths = new HashMap<Integer, String>();
 		htmlDownloadPaths.put(Integer(AbstractLotteryDataDownloadPathCollector.LotteryType.LotteryType_539), pathCollector539);
