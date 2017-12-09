@@ -172,7 +172,17 @@ import db.LotteryDataDownloadPathCollector;
 
 import java.util.ArrayList;
 
-import javax.naming.spi.DirStateFactory.Result;
+import javax.json.Json;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
+
+
+
+
+
+
 
 /**
  * command model
@@ -225,67 +235,67 @@ public class SimpleHttpServer {
 
 	    System.out.println("Waiting for connection");
 	    for (;;) {
-	      try {
-	        // wait for a connection
-	        Socket remote = s.accept();
-	        // remote is now the connected socket
-	        System.out.println("Connection, sending data.");
-	        BufferedReader in = new BufferedReader(new InputStreamReader(
-	            remote.getInputStream()));
-	        
-	        
-	        PrintWriter out = new PrintWriter(remote.getOutputStream());
+	    	try {
+	    		// wait for a connection
+		        Socket remote = s.accept();
+		        // remote is now the connected socket
+		        System.out.println("Connection, sending data.");
+		        BufferedReader in = new BufferedReader(new InputStreamReader(
+		            remote.getInputStream()));
+		        
+		        
+		        PrintWriter out = new PrintWriter(remote.getOutputStream());
 
-	        // read the data sent. We basically ignore it,
-	        // stop reading once a blank line is hit. This
-	        // blank line signals the end of the client HTTP
-	        // headers.	
-	        String line = ".";
-	        String contentString = "";
-	        while ((line = in.readLine()) != null) {
-	    		//System.out.println(line);
-	    		String lineElements[] = line.split(" ");
-	    		if (lineElements.length>2) {
-	    			if (lineElements[0].compareTo("GET")==0)  {
-	    				if (lineElements[1].contains("command:")) {
-	    					String[] roots = lineElements[1].substring(1).split(":");
-	    					if (roots.length == 2) {
-	    						String commandParam = roots[1];
-	    						if (commandParam.length() > 0) {
-	    			    			RequestParameterParser parser = new RequestParameterParser(commandParam);
-	    			    			//System.out.println("抓到的指令 : \n" + parser.Description());
-	    			    			String lotteryType = parser.commands.get(this.Lottery);
-	    			    			String strLength = parser.commands.get(this.LotteryLength);
-	    			    			contentString += requestResponse(lotteryType, Integer.parseInt(strLength));	
-	    			    			
-	    			    		}	    				
-	    					}
-		    				
-	    				}
-	    			}
-	    		}
-	    		
-	    		if (line.isEmpty()) {
-	    			break;
-	    		}
-	    		
-	    	}
-	       
-
-	        // Send the response
-	        // Send the headers
-	        out.println("HTTP/1.0 200 OK");
-	        out.println("Content-Type: text/html");
-	        out.println("Server: Bot");
-	        // this blank line signals the end of the headers
-	        out.println("");
-	        // Send the HTML page
-	        out.println(contentString);
-	        out.flush();
-	        remote.close();
-	      } catch (Exception e) {
-	        System.out.println("Error: " + e);	
-	      }
+		        // read the data sent. We basically ignore it,
+		        // stop reading once a blank line is hit. This
+		        // blank line signals the end of the client HTTP
+		        // headers.	
+		        String line = ".";
+		        String contentString = "";
+		        while ((line = in.readLine()) != null) {
+		    		//System.out.println(line);
+		    		String lineElements[] = line.split(" ");
+		    		if (lineElements.length>2) {
+		    			if (lineElements[0].compareTo("GET")==0)  {
+		    				if (lineElements[1].contains("command:")) {
+		    					String[] roots = lineElements[1].substring(1).split(":");
+		    					if (roots.length == 2) {
+		    						String commandParam = roots[1];
+		    						if (commandParam.length() > 0) {
+		    			    			RequestParameterParser parser = new RequestParameterParser(commandParam);
+		    			    			//System.out.println("抓到的指令 : \n" + parser.Description());
+		    			    			String lotteryType = parser.commands.get(this.Lottery);
+		    			    			String strLength = parser.commands.get(this.LotteryLength);
+		    			    			String jsonString = requestResponseByJSON(lotteryType, Integer.parseInt(strLength));
+		    			    			contentString += jsonString;	
+		    			    			
+		    			    		}	    				
+		    					}
+			    				
+		    				}
+		    			}
+		    		}
+		    		
+		    		if (line.isEmpty()) {
+		    			break;
+		    		}
+		       
+		        }
+		        // Send the response
+		        // Send the headers
+		        out.println("HTTP/1.0 200 OK");
+		        out.println("Content-Type: text/html");
+		        out.println("Server: Bot");
+		        // this blank line signals the end of the headers
+		        out.println("");
+		        // Send the HTML page
+		        out.println(contentString);
+		        out.flush();
+		        remote.close();
+		      }
+		      catch (Exception e) {
+		        System.out.println("Error: " + e);	
+		      }
 	    }
 	}
 	
@@ -373,6 +383,60 @@ public class SimpleHttpServer {
 		}
 		
 		return result;
+	}
+	
+	String requestResponseByJSON(String type, int length) {
+		JSONObject json = new JSONObject();
+		JSONArray jArray = new JSONArray();
+		try {
+			if (type.compareToIgnoreCase("539") == 0) {
+				
+					for (int i = listOf539.size()-1; i > listOf539.size() - length  ; i--) {
+						LN539 lotteryNumber = listOf539.get(i);
+						JSONObject numberJson = new JSONObject();
+						numberJson.put("year", lotteryNumber.strYear);
+						numberJson.put("ball1", lotteryNumber.Num1);
+						numberJson.put("ball2", lotteryNumber.Num2);
+						numberJson.put("ball3", lotteryNumber.Num3);
+						numberJson.put("ball4", lotteryNumber.Num4);
+						numberJson.put("ball5", lotteryNumber.Num5);
+						numberJson.put("date", lotteryNumber.strDate);
+						numberJson.put("totalIndex", lotteryNumber.lotteryIndexAll);
+						numberJson.put("currIndex", lotteryNumber.lotteryIndex);
+						jArray.put(numberJson);
+						//System.out.println(numberJson.toString());
+					}
+				
+			}
+			else if (type.compareToIgnoreCase("BigLottery") == 0) {
+				for (int i = listOfBigLottery.size()-1; i > listOfBigLottery.size() - length  ; i--) {
+					LNBigLottery lotteryNumber = listOfBigLottery.get(i);
+//					result += lotteryNumber.CSVLine();
+				}
+			}
+			else if (type.compareToIgnoreCase("Power38") == 0) {
+				for (int i = listOfPower38.size()-1; i > listOfPower38.size() - length  ; i--) {
+					LNPower38 lotteryNumber = listOfPower38.get(i);
+//					result += lotteryNumber.CSVLine();
+				}
+			}
+			else if (type.compareToIgnoreCase("BigFu") == 0) {
+				for (int i = listOfBigFu40.size()-1; i > listOfBigFu40.size() - length  ; i--) {
+					LN40 lotteryNumber = listOfBigFu40.get(i);
+//					result += lotteryNumber.CSVLine();
+				}
+			}
+			
+			jArray.toString();
+			json.put("form", jArray);
+		}
+		catch (JSONException ex) {
+		    ex.printStackTrace();
+		}
+		finally {
+			return json.toString();
+		}
+		
 	}
 	
 
