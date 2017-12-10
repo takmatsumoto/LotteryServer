@@ -404,26 +404,61 @@ public class SimpleHttpServer {
 						numberJson.put("totalIndex", lotteryNumber.lotteryIndexAll);
 						numberJson.put("currIndex", lotteryNumber.lotteryIndex);
 						jArray.put(numberJson);
-						//System.out.println(numberJson.toString());
 					}
 				
 			}
 			else if (type.compareToIgnoreCase("BigLottery") == 0) {
 				for (int i = listOfBigLottery.size()-1; i > listOfBigLottery.size() - length  ; i--) {
 					LNBigLottery lotteryNumber = listOfBigLottery.get(i);
-//					result += lotteryNumber.CSVLine();
+					JSONObject numberJson = new JSONObject();
+					numberJson.put("year", lotteryNumber.strYear);
+					numberJson.put("ball1", lotteryNumber.Num1);
+					numberJson.put("ball2", lotteryNumber.Num2);
+					numberJson.put("ball3", lotteryNumber.Num3);
+					numberJson.put("ball4", lotteryNumber.Num4);
+					numberJson.put("ball5", lotteryNumber.Num5);
+					numberJson.put("ball6", lotteryNumber.Num6);
+					numberJson.put("ball7", lotteryNumber.Num7);
+					numberJson.put("date", lotteryNumber.strDate);
+					numberJson.put("totalIndex", lotteryNumber.lotteryIndexAll);
+					numberJson.put("currIndex", lotteryNumber.lotteryIndex);
+					jArray.put(numberJson);
 				}
 			}
 			else if (type.compareToIgnoreCase("Power38") == 0) {
 				for (int i = listOfPower38.size()-1; i > listOfPower38.size() - length  ; i--) {
 					LNPower38 lotteryNumber = listOfPower38.get(i);
-//					result += lotteryNumber.CSVLine();
+					JSONObject numberJson = new JSONObject();
+					numberJson.put("year", lotteryNumber.strYear);
+					numberJson.put("s1n1", lotteryNumber.Section1Num1);
+					numberJson.put("s1n2", lotteryNumber.Section1Num2);
+					numberJson.put("s1n3", lotteryNumber.Section1Num3);
+					numberJson.put("s1n4", lotteryNumber.Section1Num4);
+					numberJson.put("s1n5", lotteryNumber.Section1Num5);
+					numberJson.put("s1n6", lotteryNumber.Section1Num6);
+					numberJson.put("s2n1", lotteryNumber.Section2Num);
+					numberJson.put("date", lotteryNumber.strDate);
+					numberJson.put("totalIndex", lotteryNumber.lotteryIndexAll);
+					numberJson.put("currIndex", lotteryNumber.lotteryIndex);
+					jArray.put(numberJson);
 				}
 			}
 			else if (type.compareToIgnoreCase("BigFu") == 0) {
 				for (int i = listOfBigFu40.size()-1; i > listOfBigFu40.size() - length  ; i--) {
 					LN40 lotteryNumber = listOfBigFu40.get(i);
-//					result += lotteryNumber.CSVLine();
+					JSONObject numberJson = new JSONObject();
+					numberJson.put("year", lotteryNumber.strYear);
+					numberJson.put("ball1", lotteryNumber.Num1);
+					numberJson.put("ball2", lotteryNumber.Num2);
+					numberJson.put("ball3", lotteryNumber.Num3);
+					numberJson.put("ball4", lotteryNumber.Num4);
+					numberJson.put("ball5", lotteryNumber.Num5);
+					numberJson.put("ball6", lotteryNumber.Num6);
+					numberJson.put("ball7", lotteryNumber.Num7);
+					numberJson.put("date", lotteryNumber.strDate);
+					numberJson.put("totalIndex", lotteryNumber.lotteryIndexAll);
+					numberJson.put("currIndex", lotteryNumber.lotteryIndex);
+					jArray.put(numberJson);
 				}
 			}
 			
@@ -434,8 +469,9 @@ public class SimpleHttpServer {
 		    ex.printStackTrace();
 		}
 		finally {
-			return json.toString();
+			
 		}
+		return json.toString();
 		
 	}
 	
